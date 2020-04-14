@@ -1,7 +1,7 @@
 # BCNN-for-RS
 RS数据集训练代码
 
-#代码在gpu上运行，需要以下python模块
+#代码在gpu上运行，需要以下python模块<br>
 torch
 torchvision
 opencv-python
