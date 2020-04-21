@@ -9,6 +9,7 @@ from tools.names import ucm_class_names, aid_class_names, nwpu_class_names
 from model import bcnn_vgg, se_resnet
 import torchvision.transforms as transforms
 import tools.MyAugmentations as MyAugmentations
+import torch.nn as nn
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
@@ -27,7 +28,7 @@ def main():
     if img_path == None:
         print("you haven't choose any image for prediction!")
     data_use = img_path.split('/')[-3]
-    class_name = img_path.split('/')[-1]
+    class_name = img_path.split('/')[-2]
     if data_use == '30class_rgb':
         class_names = aid_class_names
     elif data_use == '45class_rgb':
@@ -39,8 +40,9 @@ def main():
         print("Using model bcnn_vgg for prediction.")
     elif args.net == 2:
         # pretrained model needs
-        model = se_resnet.se_resnet50(num_classes=len(class_names), pretrained=None)
-        print("Using model bcnn_vgg for prediction.")
+        model = se_resnet.se_resnet50(pretrained=None)
+        model.fc = nn.Linear(2048, len(class_names))
+        print("Using model se_resnet for prediction.")
 
     # continue training from breaking
     if args.pretrained is not None:
@@ -61,7 +63,7 @@ def main():
     input = img_transform(img)
 
     # 输入网络，获得预测结果
-    output = model(input.squeeze(0))
+    output = model(input.unsqueeze(0))
     id = output.argmax(dim=1)
     print("图像类别为："+class_name)
     print("图像预测类别为："+class_names[id])

@@ -106,7 +106,8 @@ def main():
                 log_file.write("\nUsing model bcnn_vgg for traning.")
             elif args.net == 2:
                 # pretrained model needs
-                model = se_resnet.se_resnet50(num_classes=len(class_names), pretrained=None)
+                model = se_resnet.se_resnet50(pretrained=None)
+                model.fc = nn.Linear(2048, len(class_names))
                 print("Using model se_resnet for traning.")
                 log_file.write("\nUsing model se_resnet for traning.")
 
