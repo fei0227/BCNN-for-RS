@@ -107,8 +107,8 @@ def main():
             elif args.net == 2:
                 # pretrained model needs
                 model = se_resnet.se_resnet50(num_classes=len(class_names), pretrained=None)
-                print("Using model bcnn_vgg for traning.")
-                log_file.write("\nUsing model bcnn_vgg for traning.")
+                print("Using model se_resnet for traning.")
+                log_file.write("\nUsing model se_resnet for traning.")
 
             # Using GPUs and cuda to accelerate training
             if torch.cuda.is_available():
