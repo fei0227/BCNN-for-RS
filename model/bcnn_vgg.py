@@ -15,13 +15,17 @@ class BCNN(torch.nn.Module):
         features, torch.nn.Module: Convolution and pooling layers.
         fc, torch.nn.Module: class_num.
     """
-    def __init__(self, class_num=200):
+    def __init__(self, class_num=200, pretrained=None):
         """Declare all needed layers."""
         torch.nn.Module.__init__(self)
         self.class_num = class_num
         # Convolution and pooling layers of VGG-16.
-        self.features = torchvision.models.vgg16(pretrained=False).features
-        self.features = torch.nn.Sequential(*list(self.features.children())
+        vgg16 = torchvision.models.vgg16()
+        if pretrained is not None:
+            print("=> loading pretrained model '{}'".format(pretrained))
+            checkpoint = torch.load(pretrained)
+            vgg16.load_state_dict(checkpoint)
+        self.features = torch.nn.Sequential(*list(vgg16.features.children())
                                             [:-1])  # Remove pool5.
         # Linear classifier.
         self.fc = torch.nn.Linear(512**2, class_num)

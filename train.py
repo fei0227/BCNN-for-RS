@@ -104,12 +104,12 @@ def main():
             print('batch size:' + str(args.batch_size))
 
             if args.net == 1:
-                model = bcnn_vgg.BCNN(class_num=len(class_names))
+                model = bcnn_vgg.BCNN(class_num=len(class_names), pretrained=None)
                 print("Using model bcnn_vgg for traning.")
                 log_file.write("\nUsing model bcnn_vgg for traning.")
             elif args.net == 2:
                 # pretrained model needs
-                model = se_resnet.se_resnet50(num_classes=len(class_names))
+                model = se_resnet.se_resnet50(num_classes=len(class_names), pretrained=None)
                 print("Using model bcnn_vgg for traning.")
                 log_file.write("\nUsing model bcnn_vgg for traning.")
 

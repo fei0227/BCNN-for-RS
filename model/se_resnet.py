@@ -133,7 +133,7 @@ def se_resnet34(num_classes=1000, pretrained="/home/ibian/.torch/models/resnet34
     return model
 
 
-def se_resnet50(num_classes=1000, pretrained='/home/ibian/.torch/models/resnet50-19c8e357.pth'):
+def se_resnet50(num_classes=1000, pretrained=None):
     """Constructs a ResNet-50 model.
 
     Args:
