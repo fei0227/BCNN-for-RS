@@ -8,7 +8,7 @@ import cv2
 from tools.names import ucm_class_names, aid_class_names, nwpu_class_names
 from model import bcnn_vgg, se_resnet
 import torchvision.transforms as transforms
-from PIL import Image
+import tools.MyAugmentations as MyAugmentations
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
@@ -49,13 +49,15 @@ def main():
         model.load_state_dict(checkpoint)
 
     # 加载图像
-    img = Image.open(img_path)
+    img = cv2.imread(args.img_path)
+
     # 图像预处理
     img_transform = transforms.Compose([
-        transforms.Resize(224),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=dataset_mean, std=dataset_std),
+        MyAugmentations.Resize(224),
+        MyAugmentations.Normalize(mean=dataset_mean, std=dataset_std),
+        MyAugmentations.ToTensor(),
     ])
+    img = img[(2, 1, 0), :, :]
     input = img_transform(img)
 
     # 输入网络，获得预测结果
