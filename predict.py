@@ -56,7 +56,7 @@ def main():
         transforms.ToTensor(),
         transforms.Normalize(mean=dataset_mean, std=dataset_std),
     ])
-    img = img_transform(img)
+    input = img_transform(img)
 
     # 输入网络，获得预测结果
     output = model(input.squeeze(0))
