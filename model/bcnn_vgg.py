@@ -62,33 +62,6 @@ def demo():
     # load pretrained model
     model = BCNN(class_num=20)
 
-    # for k, v in model.named_parameters():
-    #     print(k)
-    #     if not "branch" in k and not "param" in k:
-    #         v.requires_grad = False
-    paras = dict(model.named_parameters())
-    paras_new = []
-    for k, v in paras.items():
-        if 'feature' in k:
-            paras_new += [{'params': [v], 'lr': 0.001}]
-        else:
-            paras_new += [{'params': [v], 'lr': 0.01}]
-    optimizer = torch.optim.SGD(paras_new, momentum=0.9, weight_decay=0.0005)
-
-    lr = 1
-    for param_group in optimizer.param_groups:
-        param_group['lr'] = lr
-
-    for p in optimizer.param_groups:
-        outputs = ''
-        for k, v in p.items():
-            print(k)
-            if k is 'params':
-                outputs += (k + ': ' + str(v[0].shape).ljust(30) + ' ')
-            else:
-                outputs += (k + ': ' + str(v).ljust(10) + ' ')
-        print(outputs)
-
     # define loss
     criterion = torch.nn.CrossEntropyLoss()
     # define input
@@ -98,6 +71,7 @@ def demo():
     # compute output
     output = model.forward(input)
     print(output)
+    print(output.argmax(dim=1))
 
     # backward
     loss = criterion(output, target)

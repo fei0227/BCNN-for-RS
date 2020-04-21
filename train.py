@@ -27,7 +27,6 @@ data_use_ratio = [['nwpu', '0.2']]
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
 parser.add_argument('--pretrained', default=None, type=str, metavar='PATH', help='use pre-trained model')
-parser.add_argument('--gpu', default= '0', type=str, metavar='INDEX', help="use gpu's number")
 parser.add_argument('--net', default=1, type=int, metavar='N', help='use which net for training')
 
 parser.add_argument('--resume', default=None, type=str, metavar='PATH', help='use pre-trained model')
@@ -63,8 +62,6 @@ if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 dataset_mean = [0.45050276, 0.49005175, 0.48422758]
 dataset_std = [0.19583832, 0.2020706, 0.2180214]
-# use gpu numbers
-os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
 
 def main():
